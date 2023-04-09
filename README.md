@@ -1,6 +1,7 @@
 # jsondiff
 
-The `jsondiff` package is a Go library that provides functionality for comparing two JSON objects and returning the differences between them.
+The `jsondiff` is a Go library for computing the differences between two JSON documents. It provides an easy-to-use API for comparing JSON documents and returning the differences in a human-readable format. This library is useful for a wide range of applications, including testing, debugging, and versioning of JSON data.
+
 
 # Installation
 
