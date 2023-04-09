@@ -31,7 +31,6 @@ These options can be customized by passing a `CompareJSONOptions` struct to the 
 
 Here's an examples of how to use the `CompareJSON` function:
 
-## Example 1
 
 ```
 package main
@@ -59,20 +58,161 @@ This will output the following JSON string:
 
 ```
 {
-    "added": {
-        "city": "New York"
-    },
-    "removed": {
-        "name": "John"
-    },
-    "changed": {
-        "name": {
-            "old": "\"John\"",
-            "new": "\"Jane\""
-        }
-    }
+	"added": {
+		"city": "New York"
+	},
+	"changed": {
+		"name": {
+			"new": "Jane",
+			"old": "John"
+		}
+	}
 }
 ```
+
+Here are some inputes and outputs
+
+### Input 1
+
+```
+Json 1:
+{
+	"username": "John",
+	"address": {
+		"city": "New York",
+		"country": "USA"
+	},
+	"gender": "male"
+}
+
+Json 2:
+
+{
+	"username": "John",
+    "lastname": "wille"
+	"age": 30,
+	"address": {
+		"city": "California",
+		"country": "USA",
+        "zipcode": 90210
+
+	},
+	"gender": "male"
+}
+```
+
+This will output the following JSON string:
+
+```
+{
+	"added": {
+		"age": 30,
+		"lastname": "wille"
+	},
+	"address": {
+		"added": {
+			"zipcode": 90210
+		},
+		"changed": {
+			"city": {
+				"new": "California",
+				"old": "New York"
+			}
+		}
+	}
+}
+```
+### Input 2
+
+```
+Json 1:
+{
+	"name": "Alice",
+	"age": 35,
+	"address": {
+	  "city": "Anytown",
+	  "state": "CA",
+	  "zip": "12345"
+	},
+	"preferences": {
+	  "color": {
+		"primary": "blue",
+		"secondary": "green"
+	  },
+	  "food": "pizza"
+	}
+} 
+
+Json 2:
+{
+	"name": "Alice",
+	"age": 35,
+	"address": {
+		"city": "Anytown",
+		"latitude": 37.7749,
+		"longitude": -71.0589,
+		"country": "USA"
+	},
+	"preferences": {
+		"color": {
+			"primary": "yellow",
+			"secondary": "orange",
+			"tertiary": "blue",
+			"quaternary": "red"
+		},
+		"food": "pizza",
+		"drink": "soda",
+		"dessert": "cake"
+	},
+	"gender": "male",
+	"profession": "engineer"
+}
+```
+
+This will output the following JSON string:
+
+```
+{
+	"added": {
+		"gender": "male",
+		"profession": "engineer"
+	},
+	"address": {
+		"added": {
+			"country": "USA",
+			"latitude": 37.7749,
+			"longitude": -71.0589
+		},
+		"removed": {
+			"state": "CA",
+			"zip": "12345"
+		}
+	},
+	"preferences": {
+		"added": {
+			"dessert": "cake",
+			"drink": "soda"
+		},
+		"color": {
+			"added": {
+				"quaternary": "red",
+				"tertiary": "blue"
+			},
+			"changed": {
+				"primary": {
+					"new": "yellow",
+					"old": "blue"
+				},
+				"secondary": {
+					"new": "orange",
+					"old": "green"
+				}
+			}
+		}
+	}
+}
+```
+The library compares two JSON objects and collects the differences at each level. The differences are presented in a single object with properties for added, removed, and changed fields. Recursion is used to handle nested objects. This provides a concise and organized representation of the differences between the two JSON objects.
 
 # Contributing
 
