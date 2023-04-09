@@ -1,9 +1,7 @@
-package jsondiff_test
+package jsondiff
 
 import (
 	"testing"
-
-	"github.com/nakulbhandare/jsondiff"
 )
 
 func TestCompareJSON(t *testing.T) {
@@ -11,7 +9,7 @@ func TestCompareJSON(t *testing.T) {
 		name        string
 		a           []byte
 		b           []byte
-		opts        *jsondiff.CompareJSONOptions
+		opts        *CompareJSONOptions
 		expectedRes string
 		expectedErr error
 	}{
@@ -59,7 +57,7 @@ func TestCompareJSON(t *testing.T) {
 			name: "json with custom option keys",
 			a:    []byte(`{"foo": "bar", "baz": "qux"}`),
 			b:    []byte(`{"foo": "bar", "baz": "quux"}`),
-			opts: &jsondiff.CompareJSONOptions{
+			opts: &CompareJSONOptions{
 				AddedKey:   "new",
 				RemovedKey: "del",
 				ChangedKey: "diff",
@@ -71,7 +69,7 @@ func TestCompareJSON(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			res, err := jsondiff.CompareJSON(tt.a, tt.b, tt.opts)
+			res, err := CompareJSON(tt.a, tt.b, tt.opts)
 			if err != tt.expectedErr {
 				t.Errorf("Expected error: %v, but got: %v", tt.expectedErr, err)
 			}
