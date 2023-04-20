@@ -50,7 +50,7 @@ func TestCompareJSON(t *testing.T) {
 			a:           []byte(`{"foo": {"bar": "baz"}}`),
 			b:           []byte(`{"foo": {"bar": "qux"}}`),
 			opts:        nil,
-			expectedRes: `{"foo":{"changed":{"bar":{"new":"qux","old":"baz"}}}}`,
+			expectedRes: `{"changed":{"foo":{"bar":{"new":"qux","old":"baz"}}}}`,
 			expectedErr: nil,
 		},
 		{
